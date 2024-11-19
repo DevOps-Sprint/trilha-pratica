@@ -1,0 +1,38 @@
+name: docker-ci-cd
+
+on: 
+  push:
+    branches:
+        - main
+
+jobs:
+  build:
+      runs-on: ubuntu-latest
+      steps:
+        - name: checar codigo
+          uses: actions/checkout@v2
+
+        - name: confg docker
+          run: |
+            sudo apt-get update
+            sudo apt-get install docker.io
+            sudo systemctl enable --now docker
+
+        - name: imagem building + rodar docker
+          run: |
+            docker build -t minha-app .
+            docker run -d -p 3000:3000 minha-app
+            docker ps
+
+        - name: testar aplicacao
+          run:  curl http://localhost:3000
+
+        - name: fechar docker
+          run: |
+            docker stop $(docker ps -q)
+            docker rm $(docker ps -aq)
+
+            
+        
+
+            
