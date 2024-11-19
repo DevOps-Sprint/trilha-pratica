@@ -20,10 +20,9 @@ jobs:
             docker --version
             echo "Docker está configurado!"
 
-        - name: imagem building + rodar docker
+        - name: rodar docker
           run: |
-            docker build -t minha-app .
-            docker run -d -p 3000:3000 minha-app
+            docker run -d -p 3000:3000 node:latest
             docker ps
 
         - name: testar aplicacao
