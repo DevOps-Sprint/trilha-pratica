@@ -8,15 +8,17 @@ on:
 jobs:
   build:
       runs-on: ubuntu-latest
+      services:
+       docker:
+        image: docker:20.10.24
       steps:
         - name: checar codigo
           uses: actions/checkout@v2
 
-        - name: confg docker
+        - name: Configurar Docker
           run: |
-            sudo apt-get update
-            sudo apt-get install docker.io
-            sudo systemctl enable --now docker
+            docker --version
+            echo "Docker está configurado!"
 
         - name: imagem building + rodar docker
           run: |
